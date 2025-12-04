@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>AI Wetter App</title>
+</head>
+<body>
+  <h1>AI Wetter App</h1>
+
+  <input id="promptInput" type="text" placeholder="Frage zum Wetter eingeben" />
+  <button onclick="sendPrompt()">Abschicken</button>
+
+  <pre id="result"></pre>
+
+<script>
+async function sendPrompt() {
+  const prompt = document.getElementById("promptInput").value;
+
+  const res = await fetch("http://localhost:8080/weather", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt })
+  });
+
+  const data = await res.json();
+
+  // Antwort von der AI Weather API anzeigen
+  document.getElementById("result").innerText = data.answer || JSON.stringify(data, null, 2);
+}
+</script>
+
+</body>
+</html>
